@@ -8,12 +8,14 @@ public class Trabalho4_AG {
     private int[][] distancias;
     private int[] avaliacao;
     private int[] select;
+    private int [][] cross;
 
     public Trabalho4_AG() {
         int i,j;
         populacao = new int[50][15];
         distancias = new int[50][15];
         avaliacao = new int[50];
+        cross = new int[50][15];
         
         for(i = 0;i<50;i++){
             avaliacao[i] = 15;
@@ -132,11 +134,53 @@ public class Trabalho4_AG {
     }
     
     void cruzamento(float Pelite){
+        Random rand = new Random();
         int nIndividuos = select.length;
         int pai,mae,cp,lInd = 15;
-        int nElite = Math.round(nElite*Pelite);
+        int nElite = Math.round(nIndividuos*Pelite);
         for(int i = 1; i < Math.round(nIndividuos/2);i++){
-            pai = Math.round();
+            pai = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
+            mae = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
+            cp = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
+            
+            int[] filho1 = new int[15];
+            int[] filho2 = new int[15];
+            
+            for(int j = 1; j < lInd; j++){
+                if(j<=cp){
+                    filho1[j] = populacao[pai][j];
+                    filho2[j] = populacao[mae][j];
+                }else{
+                    filho1[j] = populacao[mae][j];
+                    filho2[j] = populacao[pai][j];
+                }   
+            }
+            
+            for(int k = 0; k < 15; k++){
+                cross[i][k] = filho1[k];
+                cross[i+Math.round(nIndividuos/2)][k] = filho2[k];
+            }
+            
+        }
+        for(int i = 0; i<nElite; i++){
+                for(int j = 0; j < 15; j++){
+                    cross[i][j] = populacao[select[i]][j];
+                }
+         }
+    }
+    
+    void mutacao(float pmut, float pelit){
+        int auxiliar;
+        Random rand = new Random();
+        
+        for(int i = 0; i< rand.nextInt(Math.round(populacao.length/2));i++){
+            int primeiroIndiv = rand.nextInt(50);
+            int segundoIndiv = rand.nextInt(50);
+            int primGene = rand.nextInt(15);
+            int segGene = rand.nextInt(15);
+            auxiliar = populacao[primeiroIndiv][primGene];
+            populacao[primeiroIndiv][primGene] = populacao[segundoIndiv][segGene];
+            populacao[segundoIndiv][segGene] = auxiliar;
         }
     }
     
