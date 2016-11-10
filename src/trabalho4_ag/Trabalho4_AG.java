@@ -111,7 +111,7 @@ public class Trabalho4_AG {
          aux_fit = fitness;
          select = new int[nIndiv];
          
-         for(i = 1; i < Nelite; i++){
+         for(i = 0; i < Nelite; i++){
              aux_min_pos = min(aux_fit);
              aux_pos = aux_min_pos[1];
              aux_fit[aux_pos] = 0;
@@ -138,15 +138,16 @@ public class Trabalho4_AG {
         int nIndividuos = select.length;
         int pai,mae,cp,lInd = 15;
         int nElite = Math.round(nIndividuos*Pelite);
-        for(int i = 1; i < Math.round(nIndividuos/2);i++){
-            pai = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
-            mae = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
-            cp = Math.round(rand.nextFloat()*(nIndividuos-1)+1);
+        for(int i = 0; i < Math.round(nIndividuos/2);i++){
+            pai = Math.round(rand.nextFloat()*(nIndividuos-1));
+            mae = Math.round(rand.nextFloat()*(nIndividuos-1));
+            cp = Math.round(rand.nextFloat()*(nIndividuos-1));
+            //System.out.println("Mae: " + mae + " - Pai: " + pai);
             
             int[] filho1 = new int[15];
             int[] filho2 = new int[15];
             
-            for(int j = 1; j < lInd; j++){
+            for(int j = 0; j < lInd; j++){
                 if(j<=cp){
                     filho1[j] = populacao[pai][j];
                     filho2[j] = populacao[mae][j];
@@ -191,6 +192,8 @@ public class Trabalho4_AG {
         int i,j;
         a.avaliacao();
         a.roleta_e_elitismo((float)0.1);
+        a.cruzamento((float) 0.3);
+        a.mutacao((float)0.2, (float)0.3);
         
     }
     
